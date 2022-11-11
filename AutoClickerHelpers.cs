@@ -1,10 +1,10 @@
 ﻿namespace WindowsAutoClickerLibrary;
-public static class AutoClickerHelpers
+public static partial class AutoClickerHelpers
 {
-    [DllImport("user32.dll", EntryPoint = "SetCursorPos")]
-    private static extern int SetCursorPos(int x, int y); //later can have custom stuff.
-    [DllImport("user32.dll")]
-    static extern void mouse_event(int dwFlags, int dx, int dy, int dwData, int dwExtraInfo);
+    [LibraryImport("user32.dll", EntryPoint = "SetCursorPos")]
+    private static partial int SetCursorPos(int x, int y); //later can have custom stuff.
+    [LibraryImport("user32.dll")]
+    private static partial void mouse_event(int dwFlags, int dx, int dy, int dwData, int dwExtraInfo);
     //private const int MOUSEEVENTF_MOVE = 0x0001;
     private const int _mOUSEEVENTF_LEFTDOWN = 0x02;
     private const int _mOUSEEVENTF_LEFTUP = 0x04;
@@ -13,10 +13,10 @@ public static class AutoClickerHelpers
     //private const int MOUSEEVENTF_MIDDLEDOWN = 0x0020;
     //private const int MOUSEEVENTF_MIDDLEUP = 0x0040;
     //private const int MOUSEEVENTF_ABSOLUTE = 0x8000;
-    public static Point GetMousePosition => ww.MousePosition;
+    public static Point GetMousePosition => ww1.MousePosition;
     public static void SetMousePosition(int x, int y)
     {
-        SetCursorPos(x, y);
+        _ = SetCursorPos(x, y);
     }
     public static void SetMousePosition(Point point)
     {
