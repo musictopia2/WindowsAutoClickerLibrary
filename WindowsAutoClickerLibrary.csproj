@@ -1,16 +1,17 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
 	  <TargetFramework>net8.0-windows</TargetFramework>
 	  <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-	  <Version>7.0.1</Version>
+	  <Version>8.0.1</Version>
 	  <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="CommonBasicLibraries" Version="8.0.1" />
+    <PackageReference Include="CommonBasicLibraries" Version="8.0.2" />
+	  
   </ItemGroup>
 
 </Project>
