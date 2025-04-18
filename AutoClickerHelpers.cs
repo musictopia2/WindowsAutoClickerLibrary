@@ -28,35 +28,79 @@ public static partial class AutoClickerHelpers
         mouse_event(_mOUSEEVENTF_LEFTDOWN, Control.MousePosition.X, Control.MousePosition.Y, 0, 0);
         mouse_event(_mOUSEEVENTF_LEFTUP, Control.MousePosition.X, Control.MousePosition.Y, 0, 0);
     }
-    public static async Task ClickSeveralLocationsAsync(IReadOnlyList<Point> locations, int millisecondsToPauseForEachStage)
+    public static async Task ClickSeveralLocationsAsync(IReadOnlyList<Point> locations, int millisecondsToPauseForEachStage, CancellationToken token = default)
     {
         foreach (var item in locations)
         {
+            if (token.IsCancellationRequested)
+            {
+                return;
+            }
             SetMousePosition(item);
-            await Task.Delay(50);
+            if (token.IsCancellationRequested)
+            {
+                return;
+            }
+            await Task.Delay(50, token);
+            if (token.IsCancellationRequested)
+            {
+                return;
+            }
             LeftClick();
-            await Task.Delay(millisecondsToPauseForEachStage);
+            if (token.IsCancellationRequested)
+            {
+                return;
+            }
+            await Task.Delay(millisecondsToPauseForEachStage, token);
         }
     }
-    public static async Task ClickSeveralLocationsAsync(IReadOnlyList<ClickInfo> clicks)
+    public static async Task ClickSeveralLocationsAsync(IReadOnlyList<ClickInfo> clicks, CancellationToken token = default)
     {
         foreach (var item in clicks)
         {
+            if (token.IsCancellationRequested)
+            {
+                return;
+            }
             SetMousePosition(item.Location);
-            await Task.Delay(50);
+            if (token.IsCancellationRequested)
+            {
+                return;
+            }
+            await Task.Delay(50, token);
+            if (token.IsCancellationRequested)
+            {
+                return;
+            }
             LeftClick();
-            await Task.Delay(item.WaitTime);
+            if (token.IsCancellationRequested)
+            {
+                return;
+            }
+            await Task.Delay(item.WaitTime, token);
         }
     }
-    public static async Task ClickSeveralLocationsAsync(IReadOnlyList<Point> locations, Func<Point, int, Task> action)
+    public static async Task ClickSeveralLocationsAsync(IReadOnlyList<Point> locations, Func<Point, int, CancellationToken, Task> action, CancellationToken token = default)
     {
         int x = 0;
         foreach (var item in locations)
         {
+            if (token.IsCancellationRequested)
+            {
+                return;
+            }
             SetMousePosition(item);
-            await Task.Delay(50);
+            if (token.IsCancellationRequested)
+            {
+                return;
+            }
+            await Task.Delay(50, token);
             LeftClick();
-            await action.Invoke(item, x); //this means somebody else can decide what to do about each step.
+            if (token.IsCancellationRequested)
+            {
+                return;
+            }
+            await action.Invoke(item, x, token); //this means somebody else can decide what to do about each step.
             //this means that whoever does it has to wait at each step.
             //they can even decide at a certain phase to even use keystrokes to enter something (its an option).
             //however the one who calls it has to decide to send keystrokes to a certain spot, etc.
