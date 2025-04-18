@@ -28,7 +28,7 @@ public static partial class AutoClickerHelpers
         mouse_event(_mOUSEEVENTF_LEFTDOWN, Control.MousePosition.X, Control.MousePosition.Y, 0, 0);
         mouse_event(_mOUSEEVENTF_LEFTUP, Control.MousePosition.X, Control.MousePosition.Y, 0, 0);
     }
-    public static async Task ClickSeveralLocationsAsync(BasicList<Point> locations, int millisecondsToPauseForEachStage)
+    public static async Task ClickSeveralLocationsAsync(IReadOnlyList<Point> locations, int millisecondsToPauseForEachStage)
     {
         foreach (var item in locations)
         {
@@ -38,7 +38,7 @@ public static partial class AutoClickerHelpers
             await Task.Delay(millisecondsToPauseForEachStage);
         }
     }
-    public static async Task ClickSeveralLocationsAsync(BasicList<ClickInfo> clicks)
+    public static async Task ClickSeveralLocationsAsync(IReadOnlyList<ClickInfo> clicks)
     {
         foreach (var item in clicks)
         {
@@ -48,7 +48,7 @@ public static partial class AutoClickerHelpers
             await Task.Delay(item.WaitTime);
         }
     }
-    public static async Task ClickSeveralLocationsAsync(BasicList<Point> locations, Func<Point, int, Task> action)
+    public static async Task ClickSeveralLocationsAsync(IReadOnlyList<Point> locations, Func<Point, int, Task> action)
     {
         int x = 0;
         foreach (var item in locations)
